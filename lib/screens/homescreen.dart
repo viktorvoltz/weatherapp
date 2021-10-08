@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -18,13 +20,22 @@ class HomeScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _cloudIcon(),
-          _temperature(),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.only(
+          left: 30,
+          right: 20,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _cloudIcon(),
+            _temperature(),
+            _location(),
+            _date(),
+            _hourlyPrediction(),
+          ],
+        ),
       ),
     );
   }
@@ -46,6 +57,44 @@ _temperature() {
     style: TextStyle(
       fontSize: 80,
       fontWeight: FontWeight.w100,
+    ),
+  );
+}
+
+_location(){
+  return Row(
+    children: [
+      Icon(Icons.place),
+      SizedBox(width: 10,),
+      Text('Osla, No')
+    ],
+  );
+}
+
+_date(){
+  return Row(
+    children: [
+      Text('today'),
+      SizedBox(width: 10,),
+      Text('08-10-2021')
+    ],
+  );
+}
+
+final times =['1', '2', '4', '6', '7', '8', '10', '3', '20'];
+_hourlyPrediction(){
+  return Container(
+    decoration: BoxDecoration(
+      border: Border(
+        top: BorderSide(color: Colors.white),
+        bottom: BorderSide(color: Colors.white),
+      )
+    ),
+    child: ListView.builder(
+      itemCount: times.length,
+       itemBuilder: (context, index){
+         return Text('$index');
+       },
     ),
   );
 }
