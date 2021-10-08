@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -34,6 +32,7 @@ class HomeScreen extends StatelessWidget {
             _location(),
             _date(),
             _hourlyPrediction(),
+            _weeklyPredictions(),
           ],
         ),
       ),
@@ -84,6 +83,7 @@ _date(){
 final times =['1', '2', '4', '6', '7', '8', '10', '3', '20'];
 _hourlyPrediction(){
   return Container(
+    height: 100,
     decoration: BoxDecoration(
       border: Border(
         top: BorderSide(color: Colors.white),
@@ -91,9 +91,43 @@ _hourlyPrediction(){
       )
     ),
     child: ListView.builder(
+      scrollDirection: Axis.horizontal,
       itemCount: times.length,
        itemBuilder: (context, index){
-         return Text('$index');
+         return Container(
+           width: 50,
+           child: Card(
+             child: Center(
+               child: Text('${times[index]}'),
+             ),
+           )
+         );
+       },
+    ),
+  );
+}
+
+_weeklyPredictions(){
+  return Container(
+    height: 100,
+    decoration: BoxDecoration(
+      border: Border(
+        top: BorderSide(color: Colors.white),
+        bottom: BorderSide(color: Colors.white),
+      )
+    ),
+    child: ListView.builder(
+      scrollDirection: Axis.vertical,
+      itemCount: times.length,
+       itemBuilder: (context, index){
+         return Container(
+           height: 50,
+           child: Card(
+             child: Center(
+               child: Text('${times[index]}'),
+             ),
+           )
+         );
        },
     ),
   );
