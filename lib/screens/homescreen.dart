@@ -11,6 +11,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Future<Weather>? weather;
+  Future<Sys>? sys;
   @override
   void initState() {
     weather = getData();
