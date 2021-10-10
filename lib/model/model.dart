@@ -17,7 +17,7 @@ class Coord {
   }
 }
 
-class Weather {
+class Weather{
   int? id;
   String? main;
   String? description;
@@ -25,11 +25,11 @@ class Weather {
 
   Weather({this.id, this.main, this.description, this.icon});
 
-  Weather.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    main = json['main'];
-    description = json['description'];
-    icon = json['icon'];
+  Weather.fromJson(List<dynamic> json) {
+    id = json[0]['id'];
+    main = json[0]['main'];
+    description = json[0]['description'];
+    icon = json[0]['icon'];
   }
 
   Map<String, dynamic> toJson() {
