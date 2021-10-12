@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../model/model.dart';
-import '../services/http.dart';
+import 'package:provider/provider.dart';
+import '../model/newmodel.dart';
+import '../services/service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -10,16 +11,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Future<Weather>? weather;
-  Future<Sys>? sys;
   @override
+  
+  Future<WeatherData>? weather;
   void initState() {
-    sys = getData();
+    weather = getData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Forecast'),
@@ -49,8 +51,27 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _cloudIcon(),
-              temp(),
-              location(),
+              _temperature(),
+              FutureBuilder<WeatherData>(
+                future: weather,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasData) {
+                      return Text(
+                        snapshot.data!.main!.temp.toString(),
+                        style: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w100,
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text('${snapshot.error}');
+                    }
+                  }
+                  return Center(child: const CircularProgressIndicator());
+                },
+              ),
+              _location(),
               _date(),
               _hourlyPrediction(),
               _weeklyPredictions(),
@@ -60,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
+  /*
   FutureBuilder<Weather> temp() {
     return FutureBuilder<Weather>(
       future: weather,
@@ -103,10 +124,9 @@ class _HomeScreenState extends State<HomeScreen> {
         return Center(child: const CircularProgressIndicator());
       },
     );
-  }  
+  }  */
+
 }
-
-
 
 _cloudIcon() {
   return Padding(
