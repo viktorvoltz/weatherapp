@@ -14,7 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<Sys>? sys;
   @override
   void initState() {
-    weather = getData();
+    sys = getData();
     super.initState();
   }
 
@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               _cloudIcon(),
               temp(),
-              _location(),
+              location(),
               _date(),
               _hourlyPrediction(),
               _weeklyPredictions(),
@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return Text(
               snapshot.data!.description.toString(),
               style: TextStyle(
-                fontSize: 80,
+                fontSize: 40,
                 fontWeight: FontWeight.w100,
               ),
             );
@@ -82,7 +82,31 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
+
+    FutureBuilder<Sys> location() {
+    return FutureBuilder<Sys>(
+      future: sys,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            return Text(
+              snapshot.data!.country.toString(),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w100,
+              ),
+            );
+          }else if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          }
+        }
+        return Center(child: const CircularProgressIndicator());
+      },
+    );
+  }  
 }
+
+
 
 _cloudIcon() {
   return Padding(
