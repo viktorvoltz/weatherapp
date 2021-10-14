@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../model/newmodel.dart';
 import '../services/service.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -54,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       _cloudIcon(),
+
                       _temperature(),
                       Text(
                         snapshot.data!.main!.temp.toString(),
@@ -62,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.w100,
                         ),
                       ),
-                      _location(),
+                      _location(snapshot.data!.name),
                       _date(),
                       _hourlyPrediction(),
                       _weeklyPredictions(),
@@ -101,26 +103,30 @@ _temperature() {
   );
 }
 
-_location() {
+_location(Wdata) {
   return Row(
     children: [
       Icon(Icons.place),
       SizedBox(
         width: 10,
       ),
-      Text('Osla, No')
+      Text(Wdata)
     ],
   );
 }
 
+final DateTime now = DateTime.now();
+final DateFormat formatter = DateFormat('yyyy-MM-dd');
+final String formatted = formatter.format(now);
+
 _date() {
   return Row(
     children: [
-      Text('today'),
+      Text(formatted),
       SizedBox(
         width: 10,
       ),
-      Text('08-10-2021')
+      //Text('08-10-2021')
     ],
   );
 }
