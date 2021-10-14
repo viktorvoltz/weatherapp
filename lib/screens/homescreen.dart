@@ -12,7 +12,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  
   Future<WeatherData>? weather;
   void initState() {
     weather = getData();
@@ -21,7 +20,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Forecast'),
@@ -46,86 +44,41 @@ class _HomeScreenState extends State<HomeScreen> {
             left: 30,
             right: 20,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _cloudIcon(),
-              _temperature(),
-              FutureBuilder<WeatherData>(
-                future: weather,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasData) {
-                      return Text(
+          child: FutureBuilder<WeatherData>(
+            future: weather,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasData) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _cloudIcon(),
+                      _temperature(),
+                      Text(
                         snapshot.data!.main!.temp.toString(),
                         style: TextStyle(
                           fontSize: 40,
                           fontWeight: FontWeight.w100,
                         ),
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text('${snapshot.error}');
-                    }
-                  }
-                  return Center(child: const CircularProgressIndicator());
-                },
-              ),
-              _location(),
-              _date(),
-              _hourlyPrediction(),
-              _weeklyPredictions(),
-            ],
+                      ),
+                      _location(),
+                      _date(),
+                      _hourlyPrediction(),
+                      _weeklyPredictions(),
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                }
+              }
+              return Center(child: const CircularProgressIndicator());
+            },
           ),
         ),
       ),
     );
   }
-  /*
-  FutureBuilder<Weather> temp() {
-    return FutureBuilder<Weather>(
-      future: weather,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasData) {
-            return Text(
-              snapshot.data!.description.toString(),
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.w100,
-              ),
-            );
-          }else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
-        }
-        return Center(child: const CircularProgressIndicator());
-      },
-    );
-  }
-
-    FutureBuilder<Sys> location() {
-    return FutureBuilder<Sys>(
-      future: sys,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasData) {
-            return Text(
-              snapshot.data!.country.toString(),
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w100,
-              ),
-            );
-          }else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
-        }
-        return Center(child: const CircularProgressIndicator());
-      },
-    );
-  }  */
-
 }
 
 _cloudIcon() {
