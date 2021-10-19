@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.w100,
                         ),
                       ),
-                      _location(snapshot.data!.name),
+                      _location(snapshot.data!.sys!.country),
                       _date(),
                       _hourlyPrediction(),
                       _weeklyPredictions(),
