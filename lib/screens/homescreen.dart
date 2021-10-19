@@ -54,11 +54,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      _cloudIcon(),
+                      //_cloudIcon(),
 
-                      _temperature(),
+                      _city(snapshot.data!.name!.toUpperCase()),
+                      //_temperature(),
                       Text(
-                        snapshot.data!.main!.temp.toString(),
+                        "${snapshot.data!.main!.temp.toString()} fah",
                         style: TextStyle(
                           fontSize: 40,
                           fontWeight: FontWeight.w100,
@@ -100,6 +101,14 @@ _temperature() {
       fontSize: 80,
       fontWeight: FontWeight.w100,
     ),
+  );
+}
+
+_city(Wdata){
+  return Row(
+    children: [
+      Text(Wdata, style: TextStyle(fontSize: 30),)
+    ],
   );
 }
 
