@@ -21,6 +21,12 @@ class _DropDownWIdgetState extends State<DropDownWIdget> {
           dropdownvalue = newValue!;
         });
       },
+      items: <String>['nsukka', 'london', 'cairo', 'tokyo'].map<DropdownMenuItem<String>>((String value){
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList()
     );
   }
 }
