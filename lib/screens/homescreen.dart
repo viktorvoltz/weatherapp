@@ -36,10 +36,11 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Container(
         decoration: BoxDecoration(
-            gradient: LinearGradient(colors: [
-          Colors.grey.shade900,
-          Colors.black,
-        ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+          gradient: LinearGradient(colors: [
+            Colors.grey.shade900,
+            Colors.grey.shade800,
+          ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+        ),
         child: Padding(
           padding: const EdgeInsets.only(
             left: 30,
@@ -72,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   );
                 } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
+                  return Center(child: Text("couldn't load weather data"));
                 }
               }
               return Center(child: const CircularProgressIndicator());
@@ -104,10 +105,13 @@ _temperature() {
   );
 }
 
-_city(Wdata){
+_city(Wdata) {
   return Row(
     children: [
-      Text(Wdata, style: TextStyle(fontSize: 30),)
+      Text(
+        Wdata,
+        style: TextStyle(fontSize: 30),
+      )
     ],
   );
 }
