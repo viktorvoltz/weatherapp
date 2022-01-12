@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../model/newmodel.dart';
 import '../services/service.dart';
 import 'package:intl/intl.dart';
+import '../widget/dropdownwidget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -26,12 +27,13 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text('Forecast'),
         centerTitle: true,
         actions: [
-          IconButton(
+          /*IconButton(
             onPressed: () {
               Navigator.pushNamed(context, '/setting');
             },
             icon: Icon(Icons.settings),
-          )
+          ),*/
+          DropDownWIdget(),
         ],
       ),
       body: Container(
