@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import '../model/newmodel.dart';
 import '../services/service.dart';
 import 'package:intl/intl.dart';
-import '../widget/dropdownwidget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,12 +12,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  @override
+
   Future<WeatherData>? weather;
+  String dropdownvalue = 'cairo';
+
+  @override
   void initState() {
-    weather = getData();
+    weather = getData(dropdownvalue);
     super.initState();
   }
+
+  void getweather(){
+    setState(() {
+      weather = getData(dropdownvalue);
+    });
+  }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +37,22 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text('Forecast'),
         centerTitle: true,
         actions: [
-          /*IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/setting');
-            },
-            icon: Icon(Icons.settings),
-          ),*/
-          DropDownWIdget(),
+          DropdownButton(
+              value: dropdownvalue,
+              icon: Icon(Icons.arrow_drop_down),
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownvalue = newValue!;
+                });
+                getweather();
+              },
+              items: <String>['nsukka', 'london', 'cairo', 'tokyo', 'texas', 'paris']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList())
         ],
       ),
       body: Container(
