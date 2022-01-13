@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../model/newmodel.dart';
 import '../services/service.dart';
 import 'package:intl/intl.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,7 +13,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   Future<WeatherData>? weather;
   String dropdownvalue = 'cairo';
 
@@ -22,13 +22,11 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  void getweather(){
+  void getweather() {
     setState(() {
       weather = getData(dropdownvalue);
     });
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +44,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
                 getweather();
               },
-              items: <String>['nsukka', 'london', 'cairo', 'tokyo', 'texas', 'paris']
-                  .map<DropdownMenuItem<String>>((String value) {
+              items: <String>[
+                'nsukka',
+                'london',
+                'cairo',
+                'tokyo',
+                'texas',
+                'paris'
+              ].map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -97,7 +101,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   return Center(child: Text("couldn't load weather data"));
                 }
               }
-              return Center(child: const CircularProgressIndicator());
+              return Center(
+                child: LoadingIndicator(
+                    indicatorType: Indicator.circleStrokeSpin,
+                    colors: const [Colors.white],
+                    strokeWidth: 2,
+                    //backgroundColor: Colors.black,
+                    //pathBackgroundColor: Colors.black
+                    ),
+              );
             },
           ),
         ),
